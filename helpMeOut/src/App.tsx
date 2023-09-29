@@ -1,11 +1,12 @@
-import LandingPage from "./routes/LandingPage"
+// import LandingPage from "./routes/LandingPage"
+import SignUp from "./routes/SignUp"
 
 function App() {
-
+  
 
   return (
     <>
-     <LandingPage/>
+     <SignUp />
     </>
   )
 }
