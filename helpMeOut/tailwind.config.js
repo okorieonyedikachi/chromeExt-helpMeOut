@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        custom:['Inter', 'sans-serif']
+        custom:['Inter', 'sans-serif', 'Work Sans', 'Sora']
       }
     },
   },
