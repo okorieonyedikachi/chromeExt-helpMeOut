@@ -3,10 +3,10 @@ import profile from "../assets/icons/profile-circle.svg";
 import arrow from "../assets/icons/arrow-down.svg";
 import edit from "../assets/icons/edit.png";
 import frame from "../assets/images/video frame.jpg";
-import copy from "../assets/icons/copy.svg"
-import facebook from "../assets/icons/Facebook svg.png"
-import telegram from "../assets/icons/Group.png"
-import whatsapp from "../assets/icons/Vector (2).png"
+import copy from "../assets/icons/copy.svg";
+import facebook from "../assets/icons/Facebook svg.png";
+import telegram from "../assets/icons/Group.png";
+import whatsapp from "../assets/icons/Vector (2).png";
 
 const Listing = () => {
   return (
@@ -54,27 +54,71 @@ const Listing = () => {
             <button className="h-11 w-20 bg-[#605C84] rounded-lg">Send</button>
           </div>
           <div className="flex items-center bg-[#FAFAFA] w-3/6 justify-between px-6 rounded-xl max-sm:w-full max-sm:px-2">
-            <p className="text-[#4B4B4B] font-[Work Sans] text-base max-sm:text-xs">https://www.helpmeout/Untitled_Video_20232509</p>
-            <button className="border-[#120B48] border-1px px-4 py-2.5 rounded-xl flex gap-2 max-sm:text-xs max-sm:py-2 ">
-              <img src={copy} className="w-5 h-5"/>
-              <p className="max-sm:text-xs" >Copy URL</p>
+            <p className="text-[#4B4B4B] font-[Work Sans] text-base max-sm:text-xs truncate">
+              https://www.helpmeout/Untitled_Video_20232509
+            </p>
+            <button className="border-[#120B48] border-1px px-4 py-2.5  rounded-xl flex gap-2 max-sm:text-xs max-sm:py-2 ">
+              <img src={copy} className="w-5 h-5" />
+              <p className="max-sm:text-xs">Copy URL</p>
             </button>
           </div>
         </div>
         <div className="mt-8 w-3/6">
-            <p className="mb-4 font-bold">Share your video</p>
-            
-             <ul className="flex gap-4  w-fit max-sm:flex-col">
-                <li className="flex w-36  h-12 border-[#08051E] border-1px items-center justify-center gap-2 rounded-md "><img src={facebook} className="w-6 h-6 max-sm:w-3 max-sm:h-3"/><p>Facebook</p></li>
-                <li className="flex w-36 h-12 border-[#08051E] border-1px items-center justify-center gap-2 rounded-md "><img src={whatsapp} className="w-6 h-6"/><p>Whatsapp</p></li>
-                <li className="flex w-36 h-12 border-[#08051E] border-1px items-center justify-center gap-2 rounded-md "><img src={telegram} className="w-6 h-6"/><p>Telegram</p></li>
+          <p className="mb-4 font-bold">Share your video</p>
 
-             </ul>
-           
+          <ul className="flex gap-4  w-fit max-sm:flex-col">
+            <li className="flex w-36  h-12 border-[#08051E] border-1px items-center justify-center gap-2 rounded-md ">
+              <img src={facebook} className="w-6 h-6 max-sm:w-3 max-sm:h-3" />
+              <p>Facebook</p>
+            </li>
+            <li className="flex w-36 h-12 border-[#08051E] border-1px items-center justify-center gap-2 rounded-md ">
+              <img src={whatsapp} className="w-6 h-6" />
+              <p>Whatsapp</p>
+            </li>
+            <li className="flex w-36 h-12 border-[#08051E] border-1px items-center justify-center gap-2 rounded-md ">
+              <img src={telegram} className="w-6 h-6" />
+              <p>Telegram</p>
+            </li>
+          </ul>
         </div>
       </section>
-      <section id="transcript" className="w-full bg-green-400">
-            jsdnfke
+      <section id="transcript" className="w-11/12 mt-12">
+        <div className="w-2/5 mb-5">
+          <p className="mb-4 font-[Work Sans] font-bold">Transcript</p>
+          <div className="flex border-1px w-1/5 h-12 justify-center items-center gap-4 rounded-sm border-[#CFCFCF]">
+            <p className="text-xs text-[#9D9D9D]">English</p>
+            <img src={arrow} className="h-5 w-5" />
+          </div>
+        </div>
+        <div className="w-11/12">
+          <div className="flex gap-10 mb-10">
+            <p>0.01</p>
+            <p>
+              First step. Open Facebook on your desktop or mobile device and
+              locate "Marketplace" in the left-hand menu or at the top of the
+              First step. Open Facebook on your desktop or mobile device and
+              locate "Marketplace" in the left-hand menu or at the top of the{" "}
+            </p>
+          </div>
+          <div className="flex gap-10 mb-10">
+            <p>0.15</p>
+            <p>
+              First step. Open Facebook on your desktop or mobile device and
+              locate "Marketplace" in the left-hand menu or at the top of the .
+              Open Facebook on your desktop or mobile device and locate
+              "Marketplace" in the left-ha
+            </p>
+          </div>
+          <div className="flex gap-10 mb-10">
+            <p>0.30</p>
+            <p>
+              First step. Open Facebook on your desktop or mobile device and
+              locate "Marketplace" in the left-hand menu or at the top of the
+              First step. Open Facebook on your desktop or mobile device and
+              locate "Marketplace" in the left-hand menu or at the top of the{" "}
+            </p>
+          </div>
+        </div>
       </section>
     </div>
   );
