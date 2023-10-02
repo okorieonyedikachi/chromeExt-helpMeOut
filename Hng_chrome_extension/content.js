@@ -172,8 +172,24 @@ function onAccessApproved(stream) {
 
     reader.onload = function () {
       const base64 = reader.result;
-      fetch("http://ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording")
-        .then(res => console.log(res))
+
+      let url = URL.createObjectURL(recordedBlob);
+
+      let a = document.createElement('a');
+
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'screen-recording.webm';
+
+      document.body.appendChild(a);
+      a.click();
+
+      document.body.removeChild(a);
+    
+      console.log('still recording',base64)
+      
+      // fetch("http://ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording")
+      //   .then(res => console.log(res))
       // fetch("http://ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording") //Api that has Daniella's data
       // .then(response => response.json())
       // .then(data => {
@@ -312,20 +328,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     //   });
 
     // to download the blob
-    //  // let url = URL.createObjectURL(recordedBlob);
-
-    // let a = document.createElement('a');
-
-    // a.style.display = 'none';
-    // a.href = url;
-    // a.download = 'screen-recording.webm';
-
-    // document.body.appendChild(a);
-    // a.click();
-
-    // document.body.removeChild(a);
-    // const base64 = reader.result;
-    // console.log('still recording',base64)
+     
 
     //call for uploading 
     // fetch(
