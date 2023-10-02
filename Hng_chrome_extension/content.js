@@ -149,7 +149,7 @@ function onAccessApproved(stream) {
     if (!recorder) return console.log("No recorder");
     recorder.stop();
     let a = document.createElement("a");
-    a.href = "http://localhost:5173/";
+    a.href = "https://helpmeout-pied.vercel.app/id";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -172,7 +172,38 @@ function onAccessApproved(stream) {
 
     reader.onload = function () {
       const base64 = reader.result;
-
+      fetch("http://ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording")
+        .then(res => console.log(res))
+      // fetch("http://ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording") //Api that has Daniella's data
+      // .then(response => response.json())
+      // .then(data => {
+      //   //  const sessionId = data.sessionID;
+      //   //  globalSessionId = data.sessionID
+      //   console.log(sessionId);
+      // })
+      // .catch(error => {
+      //   console.error("Error fetching data:", error);
+      // });
+     
+        // .then((response) => {
+        //   if (!response.ok) {
+        //     throw new Error("Network response was not okay");
+        //   }
+        //   // console.log(response);
+    
+        //   return response.json();
+        // })
+        // .then((data) => {
+         
+        //   const sessionId = data.sessionID;
+        //   globalSessionId = data.sessionID;
+    
+        //   console.log(sessionId);
+        
+        // })
+        // .catch((error) => {
+        //   console.error("Error fetching session ID:", error);
+        // });
       
     };
     reader.readAsDataURL(recordedBlob);
@@ -254,36 +285,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // console.log("still recording")
 
 // api call for start recording 
-//   fetch(
-//     "ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording",
-//     {
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//       method: "POST",
-//       body: {}
-//     }
-//   )
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error("Network response was not okay");
-//       }
-//       // console.log(response);
-
-//       return response.json();
-//     })
-//     .then((data) => {
-     
-//       const sessionId = data.sessionID;
-//       globalSessionId = data.sessionID;
-
-//       console.log(sessionId);
-    
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching session ID:", error);
-//     });
+  
 
 /// call for stop recording
     // fetch(
