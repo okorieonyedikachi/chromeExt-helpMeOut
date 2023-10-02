@@ -9,39 +9,6 @@ function onAccessApproved(stream) {
 
   recorder.start(2000);
 
-
-
-//   fetch(
-//     "ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording",
-//     {
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//       method: "POST",
-//       body: {}
-//     }
-//   )
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error("Network response was not okay");
-//       }
-//       // console.log(response);
-
-//       return response.json();
-//     })
-//     .then((data) => {
-     
-//       const sessionId = data.sessionID;
-//       globalSessionId = data.sessionID;
-
-//       console.log(sessionId);
-    
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching session ID:", error);
-//     });
-
   console.log("recording has started");
 
   /// to stop recording
@@ -52,6 +19,8 @@ function onAccessApproved(stream) {
       }
     });
   };
+
+  // Bubble Panel controls
 
   let controlsContainer = document.createElement("div");
   controlsContainer.style.display = "flex";
@@ -175,6 +144,7 @@ function onAccessApproved(stream) {
   controlItemsContainer.appendChild(stopItem);
   controlItemsContainer.appendChild(cameraItem);
   controlsContainer.appendChild(controlItemsContainer);
+
   stopBtn.addEventListener("click", () => {
     if (!recorder) return console.log("No recorder");
     recorder.stop();
@@ -186,59 +156,24 @@ function onAccessApproved(stream) {
   });
 
   pauseBtn.addEventListener("click", () => {
-    if (MediaRecorder.state === "recording") {
-        mediaRecorder.pause();
+    if (recorder.state === "recording") {
+        recorder.pause();
         console.log("paused")
-      } else if (MediaRecorder.state === "paused") {
-        mediaRecorder.resume();
-        console.log(resumes)
+      } else if (recorder.state === "paused") {
+        recorder.resume();
+        console.log('resumes')
       }
   })
 
   recorder.ondataavailable = function (event) {
     let recordedBlob = event.data; //blob of data gotten from recording
     console.log(recordedBlob);
-    // let url = URL.createObjectURL(recordedBlob);
-
-    // let a = document.createElement('a');
-
-    // a.style.display = 'none';
-    // a.href = url;
-    // a.download = 'screen-recording.webm';
-
-    // document.body.appendChild(a);
-    // a.click();
-
-    // document.body.removeChild(a);
-    // const base64 = reader.result;
-    // console.log('still recording',base64)
+   
 
     reader.onload = function () {
       const base64 = reader.result;
 
-      fetch(
-        `ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/stream-recording/${globalSessionId}`,
-        {
-          //
-          headers: {
-            "Content-Type": "application/octet-stream",
-          },
-          method: "POST",
-          
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not okay");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error("errors", error);
-        });
+      
     };
     reader.readAsDataURL(recordedBlob);
   };
@@ -271,28 +206,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     recorder.stop(); //listens for onstop click and once its stopped data is available
 
-    // fetch(
-    //   `ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/stop-recording/${globalSessionId}`,
-    //   {
-    //     //
-    //     headers: {
-    //       "Content-Type": "application/octet-stream",
-    //     },
-    //     method: "POST",
-    //   }
-    // )
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not okay");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("errors", error);
-    //   });
 
     console.log("recording stopped here");
   }
@@ -339,3 +252,100 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //     base64Data: base64
 // }
 // console.log("still recording")
+
+// api call for start recording 
+//   fetch(
+//     "ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording",
+//     {
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       method: "POST",
+//       body: {}
+//     }
+//   )
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error("Network response was not okay");
+//       }
+//       // console.log(response);
+
+//       return response.json();
+//     })
+//     .then((data) => {
+     
+//       const sessionId = data.sessionID;
+//       globalSessionId = data.sessionID;
+
+//       console.log(sessionId);
+    
+//     })
+//     .catch((error) => {
+//       console.error("Error fetching session ID:", error);
+//     });
+
+/// call for stop recording
+    // fetch(
+    //   `ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/stop-recording/${globalSessionId}`,
+    //   {
+    //     //
+    //     headers: {
+    //       "Content-Type": "application/octet-stream",
+    //     },
+    //     method: "POST",
+    //   }
+    // )
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not okay");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("errors", error);
+    //   });
+
+    // to download the blob
+    //  // let url = URL.createObjectURL(recordedBlob);
+
+    // let a = document.createElement('a');
+
+    // a.style.display = 'none';
+    // a.href = url;
+    // a.download = 'screen-recording.webm';
+
+    // document.body.appendChild(a);
+    // a.click();
+
+    // document.body.removeChild(a);
+    // const base64 = reader.result;
+    // console.log('still recording',base64)
+
+    //call for uploading 
+    // fetch(
+    //   `ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/stream-recording/${globalSessionId}`,
+    //   {
+    //     //
+    //     headers: {
+    //       "Content-Type": "application/octet-stream",
+    //     },
+    //     method: "POST",
+        
+    //   }
+    // )
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not okay");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("errors", error);
+    //   });

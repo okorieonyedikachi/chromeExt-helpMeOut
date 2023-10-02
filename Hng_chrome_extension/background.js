@@ -10,9 +10,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
 })
 
-chrome.browserAction.onClicked.addListener(function (tab) {
-    chrome.tabs.sendMessage(tab.id, { action: "injectUI" });
-  });
+// chrome.browserAction.onClicked.addListener(function (tab) {
+//     chrome.tabs.sendMessage(tab.id, { action: "injectUI" });
+//   });
 
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){
     if(message.message === "recordedblob"){
