@@ -12,12 +12,12 @@ import Footer from "../Components/Footer";
 import photo1 from "../assets/images/AdobeStock_400053098 1.png";
 import photo2 from "../assets/images/AdobeStock_362497671 1.png";
 import photo3 from "../assets/images/woman-using-smartphone-technology 2.png";
-import { Link, useNavigate } from "react-router-dom";
-import SignUp from "./SignUp";
+import { Link} from "react-router-dom";
+
 
 const LandingPage = () => {
 
-  const navigate = useNavigate
+  
   return (
     <div className="bg-slate-200 w-full h-screen font-custom">
       <nav className="flex justify-between items-center h-24 p-12 px-12 bg-white max-sm:text-xs border-b-2 font max-sm:px-4">
@@ -46,7 +46,7 @@ const LandingPage = () => {
               how to get things done on a website.
             </p>
             <Link to="/signup" className="h-20 w-72  rounded-lg bg-[#120B48] flex justify-center items-center gap-4 text-white">
-           
+
               Install HelpMeOut <img src={arrow} alt="" />
             </Link>
           </div>
