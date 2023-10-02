@@ -1,0 +1,152 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+.body {
+    min-width: 300px;
+    height: 439px;
+    border-radius: var(--Outer-Radius, 24px);
+    display: flex; 
+    font-family: 'Work Sans', sans-serif;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.10);
+}
+
+.container {
+    height: 95%;
+    width: 90%;
+    margin: auto;
+}
+
+nav {
+    height: 28px;
+    display: flex;
+   justify-content: space-between;
+   align-items: center;
+   
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 28px;
+    height: 28px;
+}
+
+.icon-box {
+    gap: 16px;
+}
+
+h1 {
+    font-family: 'Sora', sans-serif;
+}
+
+#text {
+    width: 90%;
+    font-size: 14px;
+    color: var(--primary-primary-400, #413C6D);
+    margin-top: 16px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.more-icons {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 32px;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.monitor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tab{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+
+#fullScreen {
+    font-family: 'Work Sans', sans-serif;
+}
+
+#tabText {
+    font-weight: 600;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.camera-container{
+    width: 100%;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid var(--primary-primary-600, #100A42);
+    margin-bottom: 24px;
+    align-items: center;
+}
+
+#camera-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 12px;
+    gap: 4px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+/* .switch {
+    width: 36px;
+    height: 20px;
+    background: var(--primary-main, #120B48);
+} */
+
+.btn-holder {
+    width: 50px;
+    height: 26px;
+    border-radius: 18px;
+    background-color: #F7D6A3;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    cursor: pointer;
+}
+    .btn-circle {
+        background-color: #6B5E8A;
+        transform: translateX(0px);
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        transition: 300ms;
+    }
+
+    .active {
+        background-color: rgb(218, 114, 80);
+        transform: translateX(30px);
+        transition: 300ms;
+    }
+
+    .checkbox {
+        display: none;
+    }
+
+
+#recordBtn {
+    width: 100%;
+    height: 51px;
+    background-color: #120B48;
+    color: #FAFDFF;
+    border-radius: 12px;
+    border: none;
+}

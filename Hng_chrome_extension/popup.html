@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpMeOut Screen Recorder</title>
+    <link rel="stylesheet" href="/popup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500&family=Sora:wght@300;400;600;700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="body">
+    <div class="container ">
+        <nav>
+            <div class="logo-container">
+                <img src="images/iCON 7 1.svg" alt="logo" class="logo">
+                <h1>HelpMeOut</h1>
+            </div>
+            <div class="icon-box">
+                <img src="images/setting-2.svg" alt="">
+                <img src="images/close-circle.svg" alt="">
+            </div>
+        </nav>
+        <p id="text">This extension helps you record and share help videos with ease.</p>
+
+        <div class="more-icons">
+            <div id="monitor"><img src="images/monitor.png" alt="monitor"><p id="fullScreen">Full Screen</p></div>
+            <div id="tab"><img src="images/copy.svg" alt="tab"><p id="tabText">Current Tab</p></div>
+        </div>
+        <section>
+            <div class="camera-container"> 
+                <div id="camera-box">
+                    <img src="images/video-camera.png" alt="">
+                    <p>Camera</p>
+                </div>
+                <div class="btn-holder">
+                    <div class="btn-circle"></div>
+                    <input type="checkbox" class="checkbox">
+                </div>
+            </div>
+            <div class="camera-container"> 
+                    <div id="camera-box">
+                        <img src="images/microphone.svg" alt="">
+                        <p>Audio</p>
+                    </div>
+                    <div class="btn-holder">
+                        <div class="btn-circle"></div>
+                        <input type="checkbox" class="checkbox">
+                    </div>
+            </div>
+            <button id="recordBtn">Start Recording</button>
+            
+            <button id="stopBtn">Stop Recording</button></div>
+        </section>
+        
+    </div>
+    
+   
+    <script type="module" src="./js/popup.js"> </script>  
+   
+    
+</body>
+</html>
