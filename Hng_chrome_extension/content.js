@@ -1,17 +1,35 @@
-// onAccessApproved takes in the stream, creates a recorder
-
 var recorder = null;
 const reader = new FileReader();
 let globalSessionId = null;
 
+function getSessionId() {
+  fetch("https://highb33kay.me/api/start-recording")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not okay");
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const sessionId = data.sessionID;
+    globalSessionId = sessionId; // Store the session ID in the global variable.
+
+    console.log("Session ID:", sessionId); // Log the session ID or any relevant data.
+  })
+  .catch((error) => {
+    console.error("Error fetching session ID:", error);
+  });
+}
+
+
+
 function onAccessApproved(stream) {
   recorder = new MediaRecorder(stream);
-
-  recorder.start(2000);
-
-  console.log("recording has started");
-
-  /// to stop recording
+ 
+    recorder.start(2000);
+    const apiUrl = "https://highb33kay.me/api/start-recording";
+   
+        /// to stop recording
   recorder.onstop = function () {
     stream.getTracks().forEach(function (track) {
       if (track.readyState === "live") {
@@ -157,75 +175,28 @@ function onAccessApproved(stream) {
 
   pauseBtn.addEventListener("click", () => {
     if (recorder.state === "recording") {
-        recorder.pause();
-        console.log("paused")
-      } else if (recorder.state === "paused") {
-        recorder.resume();
-        console.log('resumes')
-      }
-  })
+      recorder.pause();
+      console.log("paused");
+    } else if (recorder.state === "paused") {
+      recorder.resume();
+      console.log("resumes");
+    }
+  });
 
   recorder.ondataavailable = function (event) {
     let recordedBlob = event.data; //blob of data gotten from recording
-    console.log(recordedBlob);
-   
-
-    reader.onload = function () {
-      const base64 = reader.result;
-
-      let url = URL.createObjectURL(recordedBlob);
-
-      let a = document.createElement('a');
-
-      a.style.display = 'none';
-      a.href = url;
-      a.download = 'screen-recording.webm';
-
-      document.body.appendChild(a);
-      a.click();
-
-      document.body.removeChild(a);
+    reader.readAsDataURL(recordedBlob); 
+    // console.log(recordedBlob);
+    reader.onloadend = function() {
+        var base64data = reader.result;                
+    }
+      chunks.push(recordedBlob)
     
-      console.log('still recording',base64)
-      
-      // fetch("http://ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording")
-      //   .then(res => console.log(res))
-      // fetch("http://ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/start-recording") //Api that has Daniella's data
-      // .then(response => response.json())
-      // .then(data => {
-      //   //  const sessionId = data.sessionID;
-      //   //  globalSessionId = data.sessionID
-      //   console.log(sessionId);
-      // })
-      // .catch(error => {
-      //   console.error("Error fetching data:", error);
-      // });
-     
-        // .then((response) => {
-        //   if (!response.ok) {
-        //     throw new Error("Network response was not okay");
-        //   }
-        //   // console.log(response);
-    
-        //   return response.json();
-        // })
-        // .then((data) => {
-         
-        //   const sessionId = data.sessionID;
-        //   globalSessionId = data.sessionID;
-    
-        //   console.log(sessionId);
-        
-        // })
-        // .catch((error) => {
-        //   console.error("Error fetching session ID:", error);
-        // });
-      
-    };
-    reader.readAsDataURL(recordedBlob);
-  };
+
+      // const streamUrl = `https://highb33kay.me/api/stream-recording/${globalSessionId}`  
+
 }
-
+}
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "request_recording") {
     console.log("request recording");
@@ -252,42 +223,53 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (!recorder) return console.log("no recorder");
 
     recorder.stop(); //listens for onstop click and once its stopped data is available
-
-
+      console.log('STOPPED');
+      sendChunkToServer(chunks, `https://highb33kay.me/api/stop-recording/${globalSessionId}`)
+  }    
+  function sendChunkToServer (chunks, stopUrl){
+     fetch(stopUrl, {
+      headers: {
+              "Content-Type": "application/octet-stream",
+      },
+      method: 'POST',
+      body: {"videoDataChunk": chunks}
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(`Error sending blob to ${apiUrl}:`, error);
+      });
     console.log("recording stopped here");
+  
   }
+    // fetch(, {
+    //   method: 'POST',
+    //   body: blob,
+    // })
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! Status: ${response.status}`);
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.log(`Server response from ${apiUrl}:`, data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(`Error sending blob to ${apiUrl}:`, error);
+    //   });
+    // console.log("recording stopped here");
+  
 });
 
-// if (request.action === "injectUI") {
-//     fetch(chrome.extension.getURL("index.html"))
-//       .then(response => response.text())
-//       .then(html => {
-//         const wrapper = document.createElement("div");
-//         wrapper.innerHTML = html;
-//         document.body.appendChild(wrapper);
-//       })
-//       .catch(error => console.error("Error fetching UI:", error));
-// }
 
-// function sendPostRequest(apiUrl, data) {
-//         fetch(apiUrl,{
-//         headers: {
-//             'Accept': 'application/json',
-//             'Content-Type': 'application/json'
-//         },
-//         method: "POST",
-//         body: JSON.stringify({base64Data: recordedBlob})
-//     })
-//     .then(response => {
-//         if(!response.ok){
-//             throw new Error('Network response was not okay')
-//         }
-//         return response.json()
-//     })
-
-//     // Displaying results to console
-//     .then(json => console.log(json));
-// }
 
 // chrome.runtime.sendMessage({
 //     message: 'recordedblob',
@@ -300,57 +282,73 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // }
 // console.log("still recording")
 
-// api call for start recording 
-  
+// api call for start recording
 
 /// call for stop recording
-    // fetch(
-    //   `ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/stop-recording/${globalSessionId}`,
-    //   {
-    //     //
-    //     headers: {
-    //       "Content-Type": "application/octet-stream",
-    //     },
-    //     method: "POST",
-    //   }
-    // )
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not okay");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("errors", error);
-    //   });
+// fetch(
+//   `ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/stop-recording/${globalSessionId}`,
+//   {
+//     //
+//     headers: {
+//       "Content-Type": "application/octet-stream",
+//     },
+//     method: "POST",
+//   }
+// )
+//   .then((response) => {
+//     if (!response.ok) {
+//       throw new Error("Network response was not okay");
+//     }
+//     return response.json();
+//   })
+//   .then((data) => {
+//     console.log(data);
+//   })
+//   .catch((error) => {
+//     console.error("errors", error);
+//   });
 
-    // to download the blob
+// to download the blob
+
+//call for uploading
+// fetch(
+//   `ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000`,
+//   {
+//     //
+//     headers: {
+//       "Content-Type": "application/octet-stream",
+//     },
+//     method: "POST",
+
+//   }
+// )
+//   .then((response) => {
+//     if (!response.ok) {
+//       throw new Error("Network response was not okay");
+//     }
+//     return response.json();
+//   })
+//   .then((data) => {
+//     console.log(data);
+//   })
+//   .catch((error) => {
+//     console.error("errors", error);
+//   });
+
+/// to download the blobs
+
+
+      // let url = URL.createObjectURL(recordedBlob);
+
+      // let a = document.createElement('a');
+
+      // a.style.display = 'none';
+      // a.href = url;
+      // a.download = 'screen-recording.webm';
+
+      // document.body.appendChild(a);
+      // a.click();
+
+      // document.body.removeChild(a);
+
      
-
-    //call for uploading 
-    // fetch(
-    //   `ec2-16-171-60-220.eu-north-1.compute.amazonaws.com:3000/api/stream-recording/${globalSessionId}`,
-    //   {
-    //     //
-    //     headers: {
-    //       "Content-Type": "application/octet-stream",
-    //     },
-    //     method: "POST",
-        
-    //   }
-    // )
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not okay");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("errors", error);
-    //   });
