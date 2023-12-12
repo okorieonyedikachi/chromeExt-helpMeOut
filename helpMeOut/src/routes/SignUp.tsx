@@ -41,11 +41,11 @@ const SignUp = () => {
           <div className="w-full mb-8">
             <div className="">
               <label className="mb-2">Email</label>
-              <input type="text" placeholder="Enter your email address" className="w-full border-[#B6B3C6] border-2 py-2 rounded-lg"/>
+              <input type="text" placeholder="Enter your email address" className="w-full border-[#B6B3C6] border-2 p-2 rounded-lg"/>
             </div>
             <div>
               <label className="mb-2">Password</label>
-              <input type="text" placeholder="Enter your Password" className="w-full border-[#B6B3C6] border-2 py-2 rounded-lg"/>
+              <input type="text" placeholder="Enter your Password" className="w-full border-[#B6B3C6] border-2 p-2 rounded-lg"/>
             </div>
           </div>
 
